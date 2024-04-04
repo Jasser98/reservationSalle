@@ -1,50 +1,48 @@
 const express = require('express');
-const salle = require('../models/salle');
+const authenticate = require('../middleware/authMiddleware');
+const salleController = require('../controllers/salleController');
 const router = express.Router();
 
-router.get('',async (req,res)=>{
-    const salles = await salle.find();
-        res.json(salles);
+router.use(authenticate);
+
+router.get('/nouvelle', async (req, res) => {
+    try {
+      res.render('nouvelleSalle'); // Rend la vue 'nouvelleSalle.ejs'
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+  });
+
+
+//get all
+router.get('/', authenticate, salleController.getAllSalles);
+
+//get by id
+router.get('/:id', authenticate, salleController.getSalleById);   
+
+//create
+//router for get crationSalle in the page : /nouvelle
+router.get('/nouvelle', async (req, res) => {
+  try {
+    res.render('nouvelleSalle'); // Rend la vue 'nouvelleSalle.ejs'
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
 });
 
-router.get('/:id', async (req, res) => {
-    try {
-        const Salle = await salle.findById(req.params.id);
-        res.json(Salle);
-    } catch (error) {
-            res.status(404).send(error.message)
-    }
-});    
+//router create
+router.post('/addSalle', authenticate, salleController.addSalle);
 
-router.post('/addSalle', async (req, res) => {
-    try {
-        const { capacity, equipment, available } = req.body;
-        const newSalle = new salle({ capacity, equipment, available  });
-        await newSalle.save();
-        res.status(201).send('Salle added successfully');
-    } catch (error) {
-        res.status(404).send(error.message)
-    }   
-});
+//update
+router.get('/update/:id',  salleController.getUpdateSalle); 
 
-router.put('/update/:id', async (req, res) => {
-    try {
-        const { capacity, equipment, available } = req.body;
-        await salle.findByIdAndUpdate(req.params.id, { capacity, equipment, available }, { new: true });
-        res.status(201).send('Salle updated successfully');
-    } catch (error) {
-        res.status(404).send(error.message)
-    }
-});    
 
-router.delete('/:id', async (req, res) => {
-    try {
-        await salle.findByIdAndDelete(req.params.id);
-        res.status(201).send('Salle deleted successfully');
-    } catch (error) {
-        res.status(404).send(error.message)
-    }
-});
+router.post('/update/:id', authenticate, salleController.updateSalle);
+
+//delete
+router.delete('/:id', authenticate, salleController.deleteSalle);
+
+//router.get('/:id', authenticate, salleController.getdeleteSalle);
 
 
 module.exports = router;

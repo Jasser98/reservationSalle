@@ -3,16 +3,28 @@ const mongoose = require('mongoose');
 const authRoutes = require('./routes/authRoutes');
 const salleRoutes = require('./routes/salleRoutes');
 const reservationRoutes = require('./routes/reservationRoutes');
+const calenderRoutes= require("./routes/calendarRouter");
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const path = require('path'); 
 const  dotenv = require('dotenv');
 dotenv.config()
 
 const app = express();
 
+app.use(cookieParser());
+
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(express.json())
 app.use('/auth', authRoutes);
 app.use('/salle', salleRoutes);
 app.use('/reservation', reservationRoutes);
+app.use('/calendar', calenderRoutes);
 
 
 const MONGODB_URI=process.env.MONGODB_URI;

@@ -1,41 +1,15 @@
 const express = require('express');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken')
-const User = require('../models/user');
 const router = express.Router();
-
+const userController = require('../controllers/authController');
 
 //regiter 
-router.post('/register',async (req,res)=>{
-    try {
-    
-        const {id,username,email,phone,password}=req.body;
-        const user = new User({id,username,email,phone,password});
-        await user.save();
-        res.status(201).send('User registered successfully');
-    } catch (error) {
-        res.status(400).send(error.message)
-    }
-})
+router.get('/register', userController.registerPage);
+
+router.post('/register', userController.register);
 
 //login
-router.post('/login',async (req,res)=>{
-    try {
-     const {email,password}=req.body;
-     const user = await User.findOne({email: email});
-     if(!user){
-         return res.status(404).send('user not found')
-     }
-     const isPasswordMatch =await bcrypt.compare(password,user.password);
-   if(!isPasswordMatch){
-     return res.status(401).send('invalid password')
-   }
-   
-    const token = jwt.sign({_id:user._id},process.env.JWT_SECRET);
-    res.send({token:token})
-    } catch (err) {
-        res.status(400).send(err.message)
-    }
-});
+router.get('/login', userController.loginPage);
+
+router.post('/login', userController.login);
 
 module.exports = router;
