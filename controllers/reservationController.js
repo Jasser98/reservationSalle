@@ -16,7 +16,8 @@ const transporter = nodemailer.createTransport({
 exports.getAllReservations = async (req, res) => {
     try {
         const reservations = await reservation.find();
-        res.json(reservations);
+        res.render('reservations', { reservations });
+        //res.json(reservations);
     } catch (error) {
         res.status(404).send(error.message)
     }
@@ -54,10 +55,32 @@ exports.create = async (req, res) => {
 
         // Vérifie si la salle est disponible
         const salle = await sale.findById(salleId);
-        if (!salle || salle.available === false) {
-            return res.status(400).json({ message: "La salle n'est pas disponible pour la réservation." });
+        if (!salle ) {
+            return res.status(400).json({ message: "La salle n'est pas disponible ." });
         }
-        
+            // **Vérifier la disponibilité du créneau**
+    const existingReservation = await reservation.findOne({
+        salleId,
+        $or: [
+          {
+            startTime: { $lte: startTime },
+            endTime: { $gte: startTime }
+          },
+          {
+            startTime: { $lte: endTime },
+            endTime: { $gte: endTime }
+          },
+          {
+            startTime: { $gte: startTime },
+            endTime: { $lte: endTime }
+          }
+        ]
+      });
+  
+      if (existingReservation) {
+        return res.status(400).json({ message: "Le créneau sélectionné est déjà réservé." });
+      }
+      
             // Créer la réservation
             const Reservation = new reservation({ salleId, startTime, endTime });
             await Reservation.save();
@@ -94,6 +117,21 @@ exports.create = async (req, res) => {
 }
 
 
+//get update front : 
+exports.getUpdate = async (req, res) => {
+    try {
+        const reservationId = req.params.id;
+        const reservationn = await reservation.findById(reservationId);
+        if (!reservationn) {
+            return res.status(404).json({ message: "La réservation spécifiée n'a pas été trouvée." });
+        }
+        res.render('updateReservation', { reservation :reservationn});
+    } catch (error) {
+        console.error(error);
+        //.status(500).json({ message: 'Erreur serveur lors de la récupération des données pour la mise à jour de la réservation.' });
+    }
+};
+
 //update res 
 exports.updateReservation = async (req, res) => {
     const { salleId, startTime, endTime } = req.body;
@@ -110,3 +148,22 @@ exports.updateReservation = async (req, res) => {
         res.status(500).json({ message: 'Erreur serveur lors de la mise à jour de la réservation.' });
     }
 }
+
+//Delete 
+exports.deleteReservation = async (req, res) => {
+    try {
+        await reservation.findByIdAndDelete(req.params.id);
+    } catch (error) {
+        res.status(404).send(error.message)
+    }
+};
+
+//deleteFront
+exports.getdeletereservation = async (req, res) => {
+    try {
+      const Reservation = await reservation.findById(req.params.id);
+      res.json(Reservation);
+    } catch (error) {
+      res.status(404).send(error.message);
+    }
+  };

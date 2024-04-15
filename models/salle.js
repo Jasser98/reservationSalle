@@ -5,7 +5,7 @@ const salleSchema = new mongoose.Schema({
     name: String,
     capacity : Number ,
     equipment:String,
-    available : {type:Boolean,default: true},
+    //available : {type:Boolean,default: true},
 });
 
 const salle = mongoose.model('Salle', salleSchema);

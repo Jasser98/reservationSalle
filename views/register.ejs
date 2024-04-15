@@ -101,6 +101,8 @@
     </style>
 </head>
 <body>
+    <%- include('navbar') %>
+
     <div class="wrapper">
         <div class="form-wrapper sign-up">
             <h1>Inscription</h1>
@@ -113,16 +115,11 @@
                 <input type="text" name="phone" id="phone" required>
                 <label for="password">Mot de passe:</label>
                 <input type="password" name="password" id="password" required>
-                <label for="role">Role:</label>
-                <select name="role" id="role">
-                <option value="user">Client</option>
-                <option value="admin">Admin</option>
-                </select>
                 <button type="submit">S'inscrire</button>
             </form>
-            
+        </div>
     </div>
 
-    
+<%- include('footer') %>
 </body>
 </html>

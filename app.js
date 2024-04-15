@@ -13,7 +13,7 @@ dotenv.config()
 const app = express();
 
 app.use(cookieParser());
-
+app.use(express.static('views'));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
@@ -25,6 +25,11 @@ app.use('/auth', authRoutes);
 app.use('/salle', salleRoutes);
 app.use('/reservation', reservationRoutes);
 app.use('/calendar', calenderRoutes);
+//index
+app.get('/', (req, res) => {
+    res.render('index'); 
+});
+
 
 
 const MONGODB_URI=process.env.MONGODB_URI;

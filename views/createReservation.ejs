@@ -76,6 +76,8 @@
     </style>
 </head>
 <body>
+    <%- include('navbar') %>
+
     <div class="wrapper">
         <div class="form-wrapper">
             <h1>Créer une Réservation</h1>
@@ -111,5 +113,6 @@
         // Sélectionner l'input avec l'ID "salleId" et lui attribuer la valeur de l'ID extrait
         document.getElementById('salleId').value = salleId;
     </script>
+<%- include('footer') %>
 </body>
 </html>

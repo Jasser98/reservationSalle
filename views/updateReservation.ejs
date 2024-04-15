@@ -37,8 +37,8 @@
             color: #fff;
         }
 
-        input[type="number"],
         input[type="text"],
+        input[type="datetime-local"],
         input[type="checkbox"] {
             width: 100%;
             padding: 8px;
@@ -77,20 +77,19 @@
     <%- include('navbar') %>
 
     <div class="wrapper">
-        <h1>Modifier Salle</h1>
-        <form action="/salle/update/<%= salle._id %>" method="POST">
-            <label for="name">Nom de la salle:</label>
-            <input type="text" name="name" id="name" value="<%= salle.name %>" required>
+        <h1>Modifier Reservation</h1>
+        <form action="/reservation/update/<%= reservation._id %>" method="POST">
+            <label for="salleID">Reservation ID:</label>
+            <input type="text" name="salleID" id="salleID" value="<%= reservation.salleId %>" required>
             <br>
-            <label for="capacity">Capacité:</label>
-            <input type="number" name="capacity" id="capacity" value="<%= salle.capacity %>" required>
+            <label for="startTime">Date Debut:</label>
+            <input type="datetime-local" name="startTime" id="startTime" value="<%= reservation.startTime %>" required>
             <br>
-            <label for="equipment">Équipement:</label>
-            <input type="text" name="equipment" id="equipment" value="<%= salle.equipment %>" required>
+            <label for="endTime">Date Fin:</label>
+            <input type="datetime-local" name="endTime" id="endTime" value="<%= reservation.endTime %>" required>
             <br>
-            <button type="submit">Modifier Salle</button>
+            <button type="submit">Reservation Modifiée</button>
         </form>
-    </div>
     
 <%- include('footer') %>
 </body>

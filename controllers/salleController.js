@@ -31,13 +31,11 @@ exports.addSalle = async (req, res) => {
             return res.status(403).json({ message: "Vous n'êtes pas autorisé à effectuer cette action." });
         }
 
-        const { name, capacity, equipment, available } = req.body;
+        const { name, capacity, equipment } = req.body;
         
-        const newSalle = new salle({ name, capacity, equipment, available  });
+        const newSalle = new salle({ name, capacity, equipment  });
         await newSalle.save();
-        const salles = await salle.find();
-        res.render('salles', { salles }); 
-        //res.status(201).send('Salle added successfully');
+        res.redirect("/salle/");
     } catch (error) {
         res.status(404).send(error.message)
     }   
@@ -72,8 +70,7 @@ exports.updateSalle = async (req, res) => {
         }
 
         const { name, capacity, equipment } = req.body;
-        const available = req.body.available === 'on';
-        await salle.findByIdAndUpdate(req.params.id, { name, capacity, equipment, available }, { new: true });
+        await salle.findByIdAndUpdate(req.params.id, { name, capacity, equipment }, { new: true });
         const salles = await salle.find();
         res.render('salles', { salles });
         // res.status(201).send({ message: 'Salle updated successfully', salle: updatedSalle });
@@ -88,22 +85,18 @@ exports.deleteSalle = async (req, res) => {
         if (req.user.role !== 'admin') {
             return res.status(403).json({ message: "Vous n'êtes pas autorisé à effectuer cette action." });
         }
-        
         await salle.findByIdAndDelete(req.params.id);
-        const salles = await salle.find();
-        res.render('salles', { salles }); 
-        //res.status(201).send('Salle deleted successfully');
     } catch (error) {
         res.status(404).send(error.message)
     }
-}
+};
 
-// exports.getdeleteSalle = async (req, res) => {
-//     try {
-//       const Salle = await salle.findById(req.params.id);
-//       res.json(Salle);
-//     } catch (error) {
-//       res.status(404).send(error.message);
-//     }
-//   };
+exports.getdeleteSalle = async (req, res) => {
+    try {
+      const Salle = await salle.findById(req.params.id);
+      res.json(Salle);
+    } catch (error) {
+      res.status(404).send(error.message);
+    }
+  };
   

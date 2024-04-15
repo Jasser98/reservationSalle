@@ -13,6 +13,7 @@
             background-image: url('background.jpg'); /* Ajoutez l'URL de votre image de fond */
             background-size: cover;
             background-repeat: no-repeat;
+            margin-top: 15%;
         }
 
         .container {
@@ -71,6 +72,8 @@
     </style>
 </head>
 <body>
+<%- include('navbar') %>
+
     <div class="container">
         <h1>Calendrier des Salles</h1>
         <% salleReservations.forEach((salleReservation) => { %>
@@ -91,5 +94,7 @@
             </div>
         <% }); %>
     </div>
+
+<%- include('footer') %>
 </body>
 </html>

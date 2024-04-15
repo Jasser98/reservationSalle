@@ -74,6 +74,8 @@
     </style>
 </head>
 <body>
+    <%- include('navbar') %>
+
     <div class="wrapper">
         <h1>Ajouter une nouvelle salle</h1>
         <form action="/salle/addSalle" method="POST">
@@ -89,5 +91,6 @@
             <button type="submit">Ajouter Salle</button>
         </form>
     </div>
+<%- include('footer') %>
 </body>
 </html>

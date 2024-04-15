@@ -16,7 +16,13 @@ router.get('/create/:id', authenticate, reservationController.getCreate);
 router.post('/create', authenticate, reservationController.create);
 
 //update
-router.put('/update/:id', reservationController.updateReservation);
+router.get('/update/:id', reservationController.getUpdate);
+router.post('/update/:id', reservationController.updateReservation);
+
+//delete 
+router.get('/:id', reservationController.getdeletereservation);
+
+router.delete('/:id', reservationController.deleteReservation);
 
 
 module.exports = router;
