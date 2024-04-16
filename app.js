@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require('mongoose');
+const authenticate = require('./middleware/authMiddleware');
 const authRoutes = require('./routes/authRoutes');
 const salleRoutes = require('./routes/salleRoutes');
 const reservationRoutes = require('./routes/reservationRoutes');
@@ -22,14 +23,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(express.json())
 app.use('/auth', authRoutes);
-app.use('/salle', salleRoutes);
-app.use('/reservation', reservationRoutes);
-app.use('/calendar', calenderRoutes);
+app.use('/salle', authenticate , salleRoutes);
+app.use('/reservation', authenticate, reservationRoutes);
+app.use('/calendar', authenticate, calenderRoutes);
 //index
-app.get('/', (req, res) => {
+app.get('/',  (req, res) => {
     res.render('index'); 
 });
-
 
 
 const MONGODB_URI=process.env.MONGODB_URI;

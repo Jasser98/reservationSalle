@@ -14,7 +14,8 @@ exports.register = async (req, res) => {
         const {id,email,password,role,username,phone}=req.body;
         const user = new User({id,email,password,role,username,phone});
         await user.save();
-        res.status(201).send('User registered successfully');
+        res.redirect('/auth/login');
+        //res.status(201).send('User registered successfully');
     } catch (error) {
         res.status(400).send(error.message)
     }
@@ -45,4 +46,10 @@ exports.login = async (req, res) => {
        } catch (err) {
            res.status(400).send(err.message)
        }
-   }
+};
+
+// logout
+exports.logout = (req, res) => {
+    res.clearCookie('authToken');
+    res.redirect('/');  
+};

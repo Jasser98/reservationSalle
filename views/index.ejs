@@ -5,53 +5,104 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
     <style>
-         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
-.container {
-    max-width: 800px;
-    margin: 80px auto;
-    padding: 20px;
-    text-align: center;
-}
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 80px auto;
+            padding: 20px;
+            text-align: center;
+        }
 
-h1 {
-    font-size: 36px;
-    color: #333;
-    margin-bottom: 20px;
-}
+        h1 {
+            font-size: 36px;
+            color: #333;
+            margin-bottom: 20px;
+        }
 
-p {
-    font-size: 18px;
-    color: #666;
-    margin-bottom: 20px;
-}
-.btn {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #0ef;
-    color: #fff;
-    font-size: 16px;
-    text-decoration: none;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
+        p {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 20px;
+        }
 
-.btn:hover {
-    background-color: #09d;
-}
-</style>
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #0ef;
+            color: #fff;
+            font-size: 16px;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #09d;
+        }
+
+        .image-link {
+            display: inline-block;
+            margin: 10px;
+        }
+
+        .image-link img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .image-link img:hover {
+            transform: scale(1.1);
+        }
+
+        .footer {
+            background-color: #333;
+            color: #fff;
+            padding: 20px 0;
+        }
+
+        .footer p {
+            margin: 0;
+        }
+    </style>
 </head>
-
 <body>
-    <%- include('navbarHomeLoginRegister') %>
+    <!-- Navbar -->
+    <%- include('navbar') %>
 
-</div>
     <div class="container">
-        <h1>Welcome to Our Website</h1>
-        <p>This is the home page.</p>
-        <p>You can add more content here.</p>
+        <h1>Bienvenue sur notre site de Réservation de Salles</h1>
+        <p>Notre site vous permet de réserver facilement des salles pour vos événements, réunions, conférences et plus encore.</p>
+        <p>Vous pouvez parcourir notre sélection de salles disponibles, vérifier les disponibilités et réserver en quelques clics.</p>
+        <p>Nous offrons une gamme de salles adaptées à divers besoins, que ce soit pour des événements professionnels ou personnels.</p>
     </div>
-    <%- include('footer') %>
+
+    <!-- Image Links -->
+    <div class="container">
+        <a href="#"><img class="image-link" src="https://blog.bird-office.com/wp-content/uploads/2017/01/loue-ma-salle-Bird-Office.jpg" alt="Image 1"></a>
+        <a href="#"><img class="image-link" src="https://blog.eavs-groupe.ma/wp-content/uploads/2022/10/guide-complet-pour-la-modernisation-de-votre-salle-de-reunion-en-2023.jpg" alt="Image 3"></a>
+        <a href="#"><img class="image-link" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5zgrFgrDr1P0b-RMZY7-evTTPMr37BIvphQ&usqp=CAU" alt="Image 4"></a>
+        <a href="#"><img class="image-link" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqkGo_H9B_fgkB0Kw0_56j38GnSg2mHP2dvQ&usqp=CAU" alt="Image 5"></a>
+    </div>
+
+    <!-- Content -->
+    
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Réservation de Salles. Tous droits réservés.</p>
+        </div>
+    </footer>
 </body>
 </html>
