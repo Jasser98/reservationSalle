@@ -20,7 +20,18 @@ exports.getSalleById = async (req, res) => {
             res.status(404).send(error.message)
     }
 }
-
+//get create salle 
+exports.getCreateSalle = async (req, res) => {
+    try {
+      const userRole = req.user.role;
+      if (userRole !== 'admin') {
+        return res.status(403).json({ message: "Vous n'êtes pas autorisé à effectuer cette action." });
+      }
+      res.render('nouvelleSalle'); // Rend la vue 'nouvelleSalle.ejs'
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+  };
 //create salle 
 exports.addSalle = async (req, res) => {
     try {

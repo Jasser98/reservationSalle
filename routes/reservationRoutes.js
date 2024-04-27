@@ -17,6 +17,7 @@ router.post('/create', authenticate, reservationController.create);
 
 //update
 router.get('/update/:id', reservationController.getUpdate);
+
 router.post('/update/:id', reservationController.updateReservation);
 
 //delete 
